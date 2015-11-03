@@ -1,2 +1,4 @@
-project: project1.o
-	cc project1.c -lm -o project
+try :
+	cc *.h 
+	cc *.c -c
+	cc *.o -lm -o project
