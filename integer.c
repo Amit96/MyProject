@@ -1,3 +1,20 @@
+/*****************************************************************************
+ * Copyright (C) Amit D.K. kamthead14.it@gmail.com
+ *
+ * This program is free software; you can redistribute it and/or modify it
+ * under the terms of the GNU Lesser General Public License as published by
+ * the Free Software Foundation; either version 2.1 of the License, or
+ * (at your option) any later version.
+ *
+ * This program is distributed in the hope that it will be useful,
+ * but WITHOUT ANY WARRANTY; without even the implied warranty of
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the
+ * GNU Lesser General Public License for more details.
+ *
+ * You should have received a copy of the GNU Lesser General Public License
+ * along with this program; if not, write to the Free Software Foundation,
+ * Inc., 51 Franklin Street, Fifth Floor, Boston MA 02110-1301, USA.
+ *****************************************************************************/
 #include<stdio.h>
 #include<stdlib.h>
 #include"cal.h"
@@ -10,7 +27,7 @@ Large_Num e5;
 Large_Num ans;
 Large_Num ans1;
 	
-char itia(int h) {
+char itia(int h) { /*converts integer "h" to character */
 	switch(h) {
 		case 0 :return '0';
 			break;
@@ -36,34 +53,33 @@ char itia(int h) {
 	}
 	return 0;
 }
-int atii(char d) {
+int atii(char d) { /*converts char "d" to integer*/
 	return (d-'0');
 }
 
     
 
-void Print_num(Large_Num hj) {
+void Print_num(Large_Num hj) { /*Prints the integer "hj" of type "Large_Num"*/
 	Large_Num jk;
 	jk = hj;
 	while(jk != NULL) {
 		printf("%c",jk->a);
-		jk= jk->next;
+		jk = jk->next;
 	}
 	printf("\n");
 }
 
-Large_Num Add_num(Large_Num t1, Large_Num t2) {
+Large_Num Add_num(Large_Num t1, Large_Num t2) { /*Adds two integers of type Large_Num "t1" and "t2" and returns the answer "e3" of type "Large_Num"*/
 	Large_Num temp;
 
-
 	int neg;
-	
 	if((t1->a == '-' && t2->a != '-') || (t2->a == '-' && t1->a != '-'))  {
 	
 		if(t1->a == '-') {
 			t1 = t1->next;
 			t1->prev = NULL;
 			ans = Subtract_num(t2, t1);
+			
 			return ans;
 		}
 		if(t2->a == '-') {
@@ -85,10 +101,10 @@ Large_Num Add_num(Large_Num t1, Large_Num t2) {
 	
 	}
 	while(t1->next != NULL) {
-		t1= t1->next;
+		t1 = t1->next;
 	}
 	while(t2->next != NULL) {
-		t2= t2->next;
+		t2 = t2->next;
 	}
 	
 	
@@ -97,13 +113,10 @@ Large_Num Add_num(Large_Num t1, Large_Num t2) {
 	int sum,sm,cy,a1,a2,a3;
 
 
-
-	 
-	e3= (Large_Num)malloc(sizeof(chr));
+	e3 = (Large_Num)malloc(sizeof(chr));
 	
-	
-	e3->a= '0';
-	e3->next=NULL;
+	e3->a = '0';
+	e3->next = NULL;
 	while((t1 != NULL) || (t2 != NULL)) {
 		if(t1 != NULL) {
 			a1=atii(t1->a);
@@ -111,7 +124,7 @@ Large_Num Add_num(Large_Num t1, Large_Num t2) {
 		if(t2 != NULL) {
 			a2 = atii(t2->a);
 		}
- 		a3= atii(e3->a);
+ 		a3 = atii(e3->a);
 
 		if((t1 != NULL) && (t2 != NULL)) {
 			sum = ((a1) + (a2) + (a3));
@@ -124,31 +137,35 @@ Large_Num Add_num(Large_Num t1, Large_Num t2) {
 		else if(t2 == NULL) {
 			sum = ((a1) + (a3));
 		}
-		sm = sum%10;
-		cy = sum/10;
+		sm = sum % 10;
+		cy = sum / 10;
 	
 
-		e3->a=itia(sm);
+		e3->a = itia(sm);
 
-		e3->prev= (Large_Num)malloc(sizeof(chr));
-		e3->prev->next=e3;
-		e3=e3->prev;
+		e3->prev = (Large_Num)malloc(sizeof(chr));
+		e3->prev->next = e3;
+		e3 = e3->prev;
 	
 
-		e3->a=itia(cy);
+		e3->a = itia(cy);
 		if(t1 != NULL) {
-	
-			t1=t1->prev;
+			t1 = t1->prev;
 
 		}
 		if(t2 != NULL) {
-	
-			t2= t2->prev;
+			t2 = t2->prev;
 		}
 	
 	}
 
-	e3->prev=NULL;
+	e3->prev = NULL;
+	while(e3->next != NULL && e3->a == '0') {
+		temp = e3;
+		e3 = e3->next;
+		free(temp);
+	}
+	e3->prev = NULL;
 	
 	if(neg == 1) {
 		e3->prev = (Large_Num)malloc(sizeof(chr));
@@ -157,37 +174,34 @@ Large_Num Add_num(Large_Num t1, Large_Num t2) {
 		e3->a = '-';
 		e3->prev = NULL;
 	}
-
+	while(e3->a == '0' && e3->next != NULL) {
+		e3 = e3->next;
+	}
+	e3->prev = NULL;
 
 	return e3;
 
 }
 
-Large_Num Create_num(char * s) {
+Large_Num Create_num(char * s) { /*creates "Large_Num" from string "s" and returns "w" (Large_Num)*/
 	
-	
-
 	w = (Large_Num)malloc(sizeof(chr));
-	w->prev=NULL;
-
+	w->prev = NULL;
 
 	while(*s != '\0') {
-	
-	
-	
-		w->a=*s;
-		w->next=(Large_Num) malloc(sizeof(chr));;
-		w->next->prev=w;
-		w=w->next;
+		w->a = *s;
+		w->next = (Large_Num) malloc(sizeof(chr));;
+		w->next->prev = w;
+		w = w->next;
 		s++;
 	}
 	Large_Num w1;
-	w1= w;
+	w1 = w;
 	w = w->prev;
-	w->next=NULL;
+	w->next = NULL;
 	free(w1);
 	while(w->prev != NULL) {
-		w=w->prev;
+		w = w->prev;
 	}
 	return w;
 
@@ -196,7 +210,7 @@ Large_Num Create_num(char * s) {
 
 
 
-Large_Num Multiply_num(Large_Num e1, Large_Num e2) {
+Large_Num Multiply_num(Large_Num e1, Large_Num e2) { /*Multiplies two integers of type Large_Num "e1" and "e2" and returns the answer "h3" of type "Large_Num"*/
 	
 	Large_Num temp;
 	int neg;
@@ -204,14 +218,12 @@ Large_Num Multiply_num(Large_Num e1, Large_Num e2) {
 	if((e1->a == '-' && e2->a != '-') || (e2->a == '-' && e1->a != '-')) {
 		neg = 1;
 		if(e1->a == '-' ) {
-
 			temp = e1;
 			e1 = e1->next;
 			e1->prev = NULL;
 	
 		}
 		if(e2->a == '-') {
-	
 			temp = e2;
 			e2 = e2->next;
 			e2->prev = NULL;
@@ -222,7 +234,6 @@ Large_Num Multiply_num(Large_Num e1, Large_Num e2) {
 		temp = e1;
 		e1 = e1->next;
 		e1->prev = NULL;
-		
 		temp = e2;
 		e2 = e2->next;
 		e2->prev = NULL;
@@ -230,11 +241,11 @@ Large_Num Multiply_num(Large_Num e1, Large_Num e2) {
 	}
 	
 	while(e1->next != NULL) {
-		e1= e1->next;
+		e1 = e1->next;
 		length1++;
 	}
 	while(e2->next != NULL) {
-		e2= e2->next;
+		e2 = e2->next;
 		length2++;
 	}
 	
@@ -245,7 +256,6 @@ Large_Num Multiply_num(Large_Num e1, Large_Num e2) {
 		for(i = 0;i <= length1 * 2 + 1; i++) {
 			h3->prev = (Large_Num)malloc(sizeof(chr));
 			h3->prev->next = h3;
-			
 			h3 = h3->prev;
 			h3->a = '0';
 			h3->prev = NULL;
@@ -257,10 +267,9 @@ Large_Num Multiply_num(Large_Num e1, Large_Num e2) {
 		for(i = 0;i <= length2 * 2 + 1; i++) {
 			h3->prev = (Large_Num)malloc(sizeof(chr));
 			h3->prev->next = h3;
-			
 			h3 = h3->prev;
 			h3->a = '0';
-			h3->prev= NULL;
+			h3->prev = NULL;
 		}
 	
 		
@@ -269,23 +278,19 @@ Large_Num Multiply_num(Large_Num e1, Large_Num e2) {
 			
 			
 			 
-	int sum,sm,cy,a1,a2,a3, j = 0;
-
-
+	int sum, sm, cy, a1, a2, a3, j = 0, no_zero = 0;
 
 	Large_Num f3;
 	
-	
 	f3 = e1;
 	while(e2 != NULL) {
-		e4= (Large_Num)malloc(sizeof(chr));
-		e4->a= '0';
-		e4->next=NULL;
+		e4 = (Large_Num)malloc(sizeof(chr));
+		e4->a = '0';
+		e4->next = NULL;
 		for(i = 0; i < j; i++) {
 	
 			e4->prev = (Large_Num)malloc(sizeof(chr));
 			e4->prev->next = e4;
-			
 			e4 = e4->prev;
 			e4->a = '0';
 			e4->prev = NULL;
@@ -297,82 +302,89 @@ Large_Num Multiply_num(Large_Num e1, Large_Num e2) {
 		e1 = f3;
 		while(e1 != NULL) {
 			if(e1 != NULL) {
-				a1=atii(e1->a);
+				a1 = atii(e1->a);
 			}
 			
- 			a3= atii(e4->a);
+ 			a3 = atii(e4->a);
 
 			if((e1 != NULL)) {
 				sum = ((a1) * (a2) + (a3));
 
 			}
 			
+			sm = sum % 10;
+			cy = sum / 10;
+	
+			e4->a = itia(sm);
 			
-			sm = sum%10;
-			cy = sum/10;
+			e4->prev = (Large_Num)malloc(sizeof(chr));
+			e4->prev->next = e4;
+			e4 = e4->prev;
 	
-			e4->a=itia(sm);
-
-			e4->prev= (Large_Num)malloc(sizeof(chr));
-			e4->prev->next=e4;
-			e4=e4->prev;
-	
-
-			e4->a=itia(cy);
+			e4->a = itia(cy);
 			if(e1 != NULL) {
-
-				e1=e1->prev;
+				e1 = e1->prev;
 			}
 		}	
 	
 	
-		
 		if(e2 != NULL) {
 			j++;
 			e2 = e2->prev;
 		
 		}
-		e4->prev=NULL;
+		e4->prev = NULL;
 
-		e4=e4->next;
+		e4 = e4->next;
 	
-                h3 =  Add_num(e4,h3);
+                h3 =  Add_num(e4, h3);
 		
 	}
 	
-
+	
 	while(h3->prev != NULL) {
 		h3 = h3->prev;
 	} 
 	Large_Num tmp;
 
-	while(h3->a == '0') {
+	while((h3->a == '0') && (h3->next != NULL)) {
 		tmp = h3;
-		h3= h3->next;
+		h3 = h3->next;
 		free(tmp);
 		}
+		
 		h3->prev = NULL;
 	if(neg == 1) {
 		h3->prev = (Large_Num)malloc(sizeof(chr));
 		h3->prev->next = h3;
 		h3 = h3->prev;
 		h3->a = '-';
-		h3->prev =NULL;
+		h3->prev = NULL;
 	}
 
 		
-	
+	Large_Num t5;
+	t5 = h3;
+	while(t5->next != NULL) {
+		if(t5->a != '-' && t5->a != '0') {
+			no_zero = 1;
+			break; 
+		}
+		t5 = t5->next;
+	}
+	if(no_zero != 1) {
+		h3 = h3->next;
+		h3->prev = NULL;
+		no_zero = 0;
+	}
 	
 
-
-
-	
 	return h3;
 
 }
 
-Large_Num Subtract_num(Large_Num e1, Large_Num e2){
-	int length1=1, length2=1, e1isb = 0, e2isb = 0, i;
+Large_Num Subtract_num(Large_Num e1, Large_Num e2){ /*Subtracts two integers of type Large_Num "e1" and "e2" and returns the answer "e5" of type "Large_Num"*/
+	int length1 = 1, length2 = 1, e1isb = 0, e2isb = 0, i, no_zero = 0;
         Large_Num tempi;
 
 	if(e1->a == '-' && e2->a != '-') {
@@ -388,7 +400,6 @@ Large_Num Subtract_num(Large_Num e1, Large_Num e2){
 			tempi = e2;
 			e2 = e2->next;
 			e2->prev = NULL;
-			
 			ans1 = Add_num(e1, e2);
 			return ans1;
 		}
@@ -400,7 +411,6 @@ Large_Num Subtract_num(Large_Num e1, Large_Num e2){
 			tempi = e1;
 			e1 = e1->next;
 			e1->prev = NULL;
-			
 			ans1 = Subtract_num(e2, e1);
 			
 			return ans1;
@@ -458,9 +468,10 @@ Large_Num Subtract_num(Large_Num e1, Large_Num e2){
 	}
 	e1 = t1;
 	e2 = t2;
+	
 	if(length1 == length2) {
-
-		while(e1->next != NULL) {
+		
+		while(e1 != NULL) {
 			if(e1->a > e2->a) {
 				e1isb = 1;
 				break;
@@ -475,19 +486,22 @@ Large_Num Subtract_num(Large_Num e1, Large_Num e2){
 	}
 
 	
-	e5= (Large_Num)malloc(sizeof(chr));
+	e5 = (Large_Num)malloc(sizeof(chr));
 	
 	int a1, a2, a3, diff, bw;	
-	e5->a= '0';
-	e5->next=NULL;
-	while((e2->next != NULL)) {
-		e2 = e2->next;
+	e5->a = '0';
+	e5->next = NULL;
+	e5->prev = NULL;
+	if(e2 != NULL) {
+		while((e2->next != NULL)) {
 		
+			e2 = e2->next;
+		}	
 	}
-
-	while((e1->next != NULL)) {
-		e1 = e1->next;
-		
+	if(e1 != NULL) {
+		while((e1->next != NULL)) {
+			e1 = e1->next;
+		}
 	}
 	
 	if(e2isb == 1) {
@@ -499,12 +513,12 @@ Large_Num Subtract_num(Large_Num e1, Large_Num e2){
 
 	while((e1 != NULL) || (e2 != NULL)) {
 		if(e1 != NULL) {
-			a1=atii(e1->a);
+			a1 = atii(e1->a);
 		}
 		if(e2 != NULL) {
  			a2 = atii(e2->a);
 		}
- 		a3= atii(e5->a);
+ 		a3 = atii(e5->a);
 
 		if((a1 > a2) || ((a1 == a2) && a3 == 0)) {
 			diff = a1 - a2 - a3;
@@ -520,37 +534,53 @@ Large_Num Subtract_num(Large_Num e1, Large_Num e2){
 		}	
 		e5->a = itia(diff);
 
-		e5->prev= (Large_Num)malloc(sizeof(chr));
-		e5->prev->next=e5;
-		e5=e5->prev;
+		e5->prev = (Large_Num)malloc(sizeof(chr));
+		e5->prev->next = e5;
+		e5 = e5->prev;
 	
 
-		e5->a=itia(bw);
+		e5->a = itia(bw);
 		if(e1 != NULL) {
-	
-			e1=e1->prev;
-
+			e1 = e1->prev;
 		}
 		if(e2 != NULL) {
-	
-			e2= e2->prev;
+			e2 = e2->prev;
 		}
 		
 	}
-
-	if(e2isb == 1) {
+	while(e5->next != NULL && e5->a == '0') {
+		temp = e5;
+		e5 = e5->next;
+		free(temp);
+	}
+	e5->prev = NULL;
 	
+	if(e2isb == 1) {
 		e5->prev = (Large_Num)malloc(sizeof(chr));
 		e5->prev->next = e5;
 		e5 = e5->prev;
 		e5->a = '-';
 		e5->prev = NULL;
 	}
-	else {
-		e5 = e5->next;
-		e5->prev=NULL;
 	
+	
+	Large_Num t5;
+	t5 = e5;
+	
+	while(t5 != NULL) {
+		if(t5->a != '-' && t5->a != '0') {
+			no_zero = 1;
+			break; 
+		}
+		t5 = t5->next;
 	}
+	
+	if(no_zero != 1 && e5->next != NULL) {
+		e5 = e5->next;
+		e5->prev = NULL;
+		no_zero = 0;
+	}
+	
 	return e5;
 }
 	

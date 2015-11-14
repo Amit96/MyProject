@@ -1,0 +1,38 @@
+*The project is a calculator.
+
+*It has the following features:
+	1. Evaluate Expression.
+	2. Operations on large integers.
+	3. Finding roots of quadratic equation.
+	4. Solving linear equations.
+
+1. To evaluate an expression, correct expression must be entered. The calculator will give wrong answer  if wrong expression is entered. The opening and closing CIRCULAR brackets must be properly placed.
+	The following math functions and their way of use are:
+		sin()		sin()
+		cos()		cos()
+		tan()		tan()
+		log()		log()
+		sqrt()		sqr()
+		sinh()		snh()
+		cosh()		cnh()
+		tanh()		tnh()
+		asin()		asn()
+		acos()		acn()
+		atan()		atn()
+		exp()		exp()
+		ceil()		cel()
+		floor()		flr()
+		log10()		ltn()
+
+2. For operations on large integers(integers larger than the int datatype can handle), ONLY INTEGERS must be entered. Negative integers can be entered.
+   Operations like Addition, Subtraction, Multiplication can be done.
+
+   * After each operation, a new integer can be entered to perform an operation with the answer of the 	   previous operation.	
+
+3. For solving quadratic equations, values of coefficients must be entered.
+
+4. Linear equations in two as well as three variables can be solved.
+	Values of coefficients must be entered for it.
+
+* Pressing the number corresponding to exit will exit from the program.
+		
